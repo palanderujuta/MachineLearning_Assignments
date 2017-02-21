@@ -1,0 +1,98 @@
+\documentclass[fleqn]{article}
+
+\usepackage{mydefs}
+\usepackage{notes}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{textcomp}
+
+\begin{document}
+\lecture{Introduction to Machine Learning}{HW1: Decision trees and KNN}{CMSC 478/678, Fall 2016}
+
+% IF YOU ARE USING THIS .TEX FILE AS A TEMPLATE, PLEASE REPLACE
+% "CMSC 478/678, Fall 2015" WITH YOUR NAME AND UID.
+
+Please note that only PDF submissions are accepted.  We encourage using \LaTeX\ to produce your writeups. You'll need {\em mydefs.sty} and {\em notes.sty} which can be downloaded from the course page.
+
+\bee
+\i (not graded): The following are true/false questions.  You don't need to answer the
+questions.  Just tell us which ones you can't answer confidently in
+less than one minute.  (You won't be graded on this.)  If you can't
+answer at least $8$, you should probably spend some extra time outside
+of class beefing up on elementary math. I would strongly suggest going through this math tutorial by Hal Daume: http://www.umiacs.umd.edu/\texttildelow hal/courses/2013S\textunderscore ML/math4ml.pdf
+
+\bee
+\i $\log x + \log y = \log (xy)$
+\i $\log [ab^c] = \log a + (\log b) (\log c)$
+\i $\ddx \sigma(x) = \sigma(x)\times(1-\sigma(x))$ where $\sigma(x) = 1/(1+e^{-x})$
+\i The distance between the point $(x_1,y_1)$ and line $ax + by + c$ is ${(ax_1 + by_1+c)}/{\sqrt{a^2 + b^2}}$
+\i $\ddx \log x = - \frac 1 x$
+\i $p(a \| b) = p(a,b) / p(b)$
+\i $p(x \| y,z) = p(x \| y) p(x \| z)$
+\i $C(n,k) = C(n-1, k-1) + C(n-1, k)$, where $C(n,k)$ is the number of ways of choosing $k$ objects from $n$
+\i $\norm{\al \vec u + \vec v}^2 = \al^2 \norm{\vec u}^2 + \norm{\vec v}^2$, where $\norm{\cdot}$ denotes Euclidean norm, $\al$ is a scalar and $\vec u$ and $\vec v$ are vectors
+\i $\ab{\vec u\T\vec v} \geq \norm{\vec u} \times \norm{\vec v}$, where $\ab{\cdot}$ denotes absolute value and $\vec u\T\vec v$ is the dot product of $\vec u$ and $\vec v$
+\i $\int_{-\infty}^{\infty} \ud x \exp[-(\pi/2) x^2] = \sqrt{2}$
+\ene
+
+\i (not graded): Go though this matlab tutorial by Stefan Roth:
+
+ http://cs.brown.edu/courses/csci1950-g/docs/matlab/matlabtutorialcode.html
+
+
+
+\i In class, we looked at an example where all the attributes were binary (i.e., yes/no valued). Consider an example where instead of the attribute ``Morning?", we had an attribute ``Time" which specifies when the class begins. 
+\bee
+\i We can pick a threshold $\tau$ and use (Time $< \tau$)? as a criteria to split the data in two. Explain how you might pick the optimal value of $\tau$.
+% \begin{solution}
+%   $\tau = \argmin (f(x))$
+% \end{solution}
+\i In the decision tree learning algorithm discussed in class, once a binary attribute is used, the subtrees do not need to consider it. Explain why when there are continuous attributes this may not be the case.
+% \begin{solution}
+% Think of a clever answer
+% \end{solution}
+\ene
+ 
+\i Why memorizing the training data and doing table lookups is a bad strategy for learning? How do we prevent that in decision trees?
+% \begin{solution}
+% "if you tell the truth, you don't have to remember anything" - Mark twain
+% \end{solution}
+
+\i What does the decision boundary of 1-nearest neighbor classifier for 2 points (one positive, one negative) look like?
+% \begin{solution}
+% \end{solution}
+
+\i Does the accuracy of a kNN classifier using the Euclidean distance change if you (a) translate the data (b) scale the data (i.e., multiply the all the points by a constant), or (c) rotate the data? Explain. Answer the same for a kNN classifier using Manhattan distance\footnote{\url{http://en.wikipedia.org/wiki/Taxicab_geometry}}. 
+% \begin{solution}
+% \end{solution}
+
+\i Implement kNN in matlab for handwritten digit classification and submit all codes and plots:
+
+\bee
+\i Download MNIST digit dataset (60,000 training and 10,000 testing data points) and the starter code from the course page. Each row in the matrix represents a handwritten digit image. The starter code shows how to visualize an example data point in matlab. The task is to predict the class (0 to 9) for a given test image, so it is a 10-way classification problem. 
+
+%\begin{figure}[tb]
+%\center
+%\includegraphics[width=.4\linewidth]{mnist-dataset.png}
+%\end{figure}
+
+
+\i Write a matlab function that implements kNN for this task and reports the accuracy for each class (10 numbers) as well as the average accuracy (one number).
+
+{\em [acc acc\_av] = kNN(images\_train, labels\_train, images\_test, labels\_test, k)}
+
+where {\em acc} is a vector of length 10 and {\em acc\_av} is a scalar. Look at a few correct and wrong predictions to see if it makes sense. To speed it up, in all experiments, you may use only the first 1000 testing images.
+
+\i For $k=1$, change the number of training data points (30 to 10,000) to see the change in performance. Plot the average accuracy for 10 different dataset sizes. You may use command {\em logspace} in matlab. In the plot, x-axis is for the number of training data and y-axis is for the accuracy.
+
+\i Show the effect of $k$ on the accuracy. Make a plot similar to the above one with multiple colored curves on the top of each other (each for a particular $k$ in [1 2 3 5 10].) You may use command {\em legend} in matlab to name different colors.
+
+\i Choose the best $k$ for 2,000 total training data by splitting the training data into two halves (the first for training and the second for validation). You may plot the average accuracy wrt $k$ for this. Note that in this part, you should not use the test data. You may search for $k$ in this list: [1 2 3 5 10].
+
+\ene
+
+\ene
+
+\end{document}
+
+
